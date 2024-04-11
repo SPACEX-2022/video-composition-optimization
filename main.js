@@ -60,7 +60,18 @@ rimrafSync(slash(path.resolve('./output/images/*.jpg')), { glob: true });
     // Launch the browser
     const browser = await puppeteer.launch({
         headless: true,
-        args: ['--disk-cache'],
+        args: [
+            '--disk-cache',
+            "--enable-gpu",
+            "--ignore-gpu-blacklist",
+            "--enable-gpu-rasterization",
+            "--enable-zero-copy",
+            "--gpu-rasterization-msaa-sample-count=16",
+            '--enable-gpu-memory-buffer-video-frames',
+            '--enable-native-gpu-memory-buffers',
+            '--video-capture-use-gpu-memory-buffer',
+            '--video-threads=14',
+        ],
     });
 
     // Create a page
@@ -69,7 +80,8 @@ rimrafSync(slash(path.resolve('./output/images/*.jpg')), { glob: true });
     await page.setViewport({width: 1920, height: 1080});
 
     // Go to your site
-    await page.goto('https://magictest.dinglitec.com/player/index.html?templateId=1163717567884958434&jobId=1163717664528772332');
+    // await page.goto('https://magictest.dinglitec.com/player/index.html?templateId=1163717567884958434&jobId=1163717664528772332');
+    await page.goto('http://localhost:3000/index.html?templateId=1163717567884958434&jobId=1163717664528772332');
     const browserCost = Date.now() - browserStart;
 
 
@@ -79,7 +91,7 @@ rimrafSync(slash(path.resolve('./output/images/*.jpg')), { glob: true });
     // log(chalk.green, 'wait for loaded')
     const spinner = ora('wait for loaded').start();
     let loadStart = Date.now();
-    const watchLoaded = page.waitForFunction('window.datav.loaded === true');
+    const watchLoaded = page.waitForFunction('window.datav.loaded === true && window.datav.firstFrameLoaded === true');
 
     async function seek(timestamp) {
         log(chalk.green, '截帧时间点', timestamp, 'ms')
@@ -114,7 +126,7 @@ rimrafSync(slash(path.resolve('./output/images/*.jpg')), { glob: true });
                 type: 'jpeg',
                 quality: 80,
                 // fromSurface: true,
-                optimizeForSpeed: true,
+                // optimizeForSpeed: true,
             });
             const screenshotCost = Date.now() - start;
             totalScreenshotCost += screenshotCost;
