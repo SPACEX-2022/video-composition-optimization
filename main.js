@@ -60,6 +60,8 @@ rimrafSync(slash(path.resolve('./output/images/*.jpg')), { glob: true });
     // Launch the browser
     const browser = await puppeteer.launch({
         headless: true,
+        // headless: false,
+        // defaultViewport: { width: 1920, height: 1080},
         args: [
             '--disk-cache',
             "--enable-gpu",
@@ -71,6 +73,15 @@ rimrafSync(slash(path.resolve('./output/images/*.jpg')), { glob: true });
             '--enable-native-gpu-memory-buffers',
             '--video-capture-use-gpu-memory-buffer',
             '--video-threads=14',
+
+            // '--use-cmd-decoder=passthrough',
+            // '--enable-features=CanvasOopRasterization,VaapiVideoDecoder,UseChromeOSDirectVideoDecoder,VaapiIgnoreDriverChecks,PlatformHEVCDecoderSupport,Vulkan,DefaultANGLEVulkan,VulkanFromANGLE',
+            // '--use-gl=angle',
+            // '--use-angle=vulkan',
+            // '--use-vulkan=native',
+            // '--ozone-platform=x11',
+
+            // '--disable-features=UseOzonePlatform',
         ],
     });
 
@@ -80,10 +91,12 @@ rimrafSync(slash(path.resolve('./output/images/*.jpg')), { glob: true });
     await page.setViewport({width: 1920, height: 1080});
 
     // Go to your site
-    // await page.goto('https://magictest.dinglitec.com/player/index.html?templateId=1163717567884958434&jobId=1163717664528772332');
-    await page.goto('http://localhost:3000/index.html?templateId=1163717567884958434&jobId=1163717664528772332');
+    // await page.goto('https://magictest.dinglitec.com/player/index.html?templateId=1163717567884958434&jobId=1163717664528772332'); // 数字人
+    await page.goto('https://magictest.dinglitec.com/player/index.html?templateId=1163725541149476826&jobId=1163725551097317338'); // MP4
+    // await page.goto('https://magictest.dinglitec.com/player/index.html?templateId=1163725551102560218&jobId=1163725552429008858'); // 图表、花字、文本、贴图
     const browserCost = Date.now() - browserStart;
 
+    // await new Promise((resolve) => setTimeout(resolve, 1000000))
 
     let totalSeekCost = 0;
     let totalScreenshotCost = 0;
