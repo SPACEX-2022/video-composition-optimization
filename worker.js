@@ -101,13 +101,13 @@ parentPort.on('message', async (data) => {
         });
         const screenshotCost = Date.now() - start;
         totalScreenshotCost += screenshotCost;
-        log(chalk.yellow, 'screenshot 耗时', screenshotCost, 'ms')
+        log(chalk.yellow, `线程：${threadIndex}，screenshot 耗时`, screenshotCost, 'ms')
 
         const saveImgStart = Date.now();
         await writeFile(path.resolve(`./output/images/screenshot${(threadIndex * count) + index}.jpg`), data)
         const saveImgCost = Date.now() - saveImgStart;
         totalSaveImgCost += saveImgCost;
-        log(chalk.yellow, 'saveImg 耗时', saveImgCost, 'ms')
+        log(chalk.yellow, `线程：${threadIndex}，saveImg 耗时`, saveImgCost, 'ms')
 
 
         index++;

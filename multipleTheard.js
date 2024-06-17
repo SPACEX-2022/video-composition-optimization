@@ -67,7 +67,7 @@ rimrafSync(slash(path.resolve('./output/images/*.jpg')), { glob: true });
     await page.setViewport({width: 1920, height: 1080});
 
     // const url = 'https://magictest.dinglitec.com/player/index.html?templateId=1163725541149476826&jobId=1163725551097317338' // MP4
-    const url = 'https://magictest.dinglitec.com/player/index.html?templateId=1161928703861819354&jobId=1163725522192271322' // 性能压测模板
+    const url = 'https://dingshu.dinglitec.com/player/index.html?templateId=1190752389781719068&jobId=1190752390033377308&open_in_browser=true' // 性能压测模板
     // Go to your site
     // await page.goto('https://magictest.dinglitec.com/player/index.html?templateId=1163717567884958434&jobId=1163717664528772332'); // 数字人
     await page.goto(url);
